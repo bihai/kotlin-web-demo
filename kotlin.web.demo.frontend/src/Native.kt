@@ -63,6 +63,10 @@ enum class ProjectType {
 native
 trait FileProvider {
     fun saveFile(file: File, callback: () -> Unit)
+    fun renameFile(publicId: String, callback: (String) -> Unit, newName: String)
+    fun deleteFile(file: File, callback: () -> Unit)
+
+    fun loadOriginalFile(file: File, onSuccess: (dynamic) -> Unit, onNotFound: () -> Unit)
 }
 
 native
@@ -73,6 +77,7 @@ trait Project {
     fun getType(): ProjectType
     fun getName(): String
     fun getParent(): FolderView
+    fun deleteFile(file: File)
 }
 
 native
@@ -97,5 +102,10 @@ trait ConverterProvider {
     var onConvertFail: (dynamic) -> Unit
     var beforeConvert: () -> Unit
     fun convert(text: String, callback: (String)->Unit): Unit
-
 }
+
+native
+fun removeKotlinExtension(name: String): String
+
+native
+fun addKotlinExtension(name: String): String
