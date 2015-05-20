@@ -39,7 +39,7 @@ native
 fun JQuery.on(s: String, onClose: (Event) -> Unit)
 
 native
-trait Error {
+interface Error {
     val className: String
     val interval: dynamic
     val message: String
@@ -48,20 +48,20 @@ trait Error {
 
 native
 enum class FileType {
-    KOTLIN_FILE
-    KOTLIN_TEST_FILE
+    KOTLIN_FILE,
+    KOTLIN_TEST_FILE,
     JAVA_FILE
 }
 
 native
 enum class ProjectType {
-    EXAMPLE
-    USER_PROJECT
+    EXAMPLE,
+    USER_PROJECT,
     PUBLIC_LINK
 }
 
 native
-trait FileProvider {
+interface FileProvider {
     fun saveFile(file: File, callback: () -> Unit)
     fun renameFile(publicId: String, callback: (String) -> Unit, newName: String)
     fun deleteFile(file: File, callback: () -> Unit)
@@ -73,18 +73,19 @@ native
 val fileProvider: FileProvider = noImpl
 
 native
-trait Project {
+interface Project {
     fun getType(): ProjectType
     fun getName(): String
     fun getParent(): FolderView
     fun deleteFile(file: File)
+    fun getConfiguration(): dynamic
 }
 
 native
 val projectProvider: dynamic = noImpl
 
 native
-trait LoginModel{
+interface LoginModel{
     fun login(type: String)
     fun logout()
     fun getUserName()
@@ -97,7 +98,7 @@ native
 var CodeMirror: dynamic = noImpl
 
 native
-trait ConverterProvider {
+interface ConverterProvider {
     var onConvertComplete: () -> Unit
     var onConvertFail: (dynamic) -> Unit
     var beforeConvert: () -> Unit
@@ -109,3 +110,17 @@ fun removeKotlinExtension(name: String): String
 
 native
 fun addKotlinExtension(name: String): String
+
+native
+fun generateAjaxUrl(type: String, parameters: Json): String
+
+native
+fun checkDataForNull(data: dynamic): Boolean
+
+native
+fun checkDataForException(data: dynamic): Boolean
+
+native("$")
+object JQuery{
+    fun ajax(params: Json)
+}

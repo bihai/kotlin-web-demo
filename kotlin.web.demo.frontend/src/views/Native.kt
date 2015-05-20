@@ -45,7 +45,7 @@ native
 public fun JQuery.button(mode : String, param : String, value : Any?) : JQuery = noImpl
 
 native
-trait ProjectView{
+interface ProjectView{
     fun getProjectData(): Project
     fun getDepth(): Int
     fun setSelectedFileView(fileView: FileView)
